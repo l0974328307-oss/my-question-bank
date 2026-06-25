@@ -141,5 +141,130 @@ function resetProgress() {
     }
 }
 
+function openManualEdit() {
+    const manualArea = document.getElementById("manualEditArea");
+    manualArea.style.display = "block";
+
+    initManualChapterSelect();
+}
+
+function closeManualEdit() {
+    document.getElementById("manualEditArea").style.display = "none";
+}
+
+function initManualChapterSelect() {
+
+    const select =
+        document.getElementById("manualChapterSelect");
+
+    select.innerHTML =
+        '<option value="">請選擇章節</option>';
+
+    const chapters =
+        [...new Set(questions.map(q => q.chapter))];
+
+    chapters.forEach(chapter => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = chapter;
+        option.textContent = chapter;
+
+        select.appendChild(option);
+    });
+
+    document.getElementById("manualQuestionList").innerHTML = "";
+}
+
+function showManualQuestionList() {
+
+    const chapter =
+        document.getElementById("manualChapterSelect").value;
+
+    const listDiv =
+        document.getElementById("manualQuestionList");
+
+    if (chapter === "") {
+
+        listDiv.innerHTML = "";
+        return;
+    }
+
+    const chapterQuestions =
+        questions.filter(q => q.chapter === chapter);
+
+    let html = "<h3>題目清單</h3>";
+
+    chapterQuestions.forEach(q => {
+
+        const checked =
+            doneQuestions.includes(q.file)
+                ? "checked"
+                : "";
+
+        const fileName =
+            q.file.split("/").pop();
+
+        html += `
+            <label style="display:block;margin:5px 0;">
+                <input
+                    type="checkbox"
+                    class="manualCheckbox"
+                    value="${q.file}"
+                    ${checked}
+                >
+                ${fileName}
+            </label>
+        `;
+    });
+
+    listDiv.innerHTML = html;
+}
+
+function saveManualEdit() {
+
+    const chapter =
+        document.getElementById("manualChapterSelect").value;
+
+    if (chapter === "") {
+
+        alert("請先選擇章節！");
+        return;
+    }
+
+    const chapterQuestions =
+        questions.filter(q => q.chapter === chapter);
+
+    const chapterFiles =
+        chapterQuestions.map(q => q.file);
+
+    doneQuestions =
+        doneQuestions.filter(
+            file => !chapterFiles.includes(file)
+        );
+
+    const checkedBoxes =
+        document.querySelectorAll(
+            ".manualCheckbox:checked"
+        );
+
+    checkedBoxes.forEach(box => {
+
+        doneQuestions.push(box.value);
+    });
+
+    localStorage.setItem(
+        "doneQuestions",
+        JSON.stringify(doneQuestions)
+    );
+
+    updateStatus();
+
+    document.getElementById("manualEditArea").style.display = "none";
+
+    alert("儲存成功！");
+}
+
 initChapterSelect();
 updateStatus();

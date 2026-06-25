@@ -22,6 +22,7 @@
     <button onclick="drawQuestion()">隨機抽題</button>
     <button onclick="markDone()">標記已完成</button>
     <button onclick="showChapter()">章節來源</button>
+    <button onclick="openManualEdit()">手動修改</button>
     <button onclick="resetProgress()">重置紀錄</button>
 
     <br><br>
@@ -32,8 +33,36 @@
 
     <div id="questionName" style="display:none;"></div>
 
-    <script src="questions_data.js"></script>
-    <script src="app.js"></script>
+    <hr>
+
+    <div id="manualEditArea" style="display:none;">
+
+    	
+      <h2>手動修改</h2>
+
+      <label>選擇要修改的章節：</label>
+
+      <select id="manualChapterSelect"
+              onchange="showManualQuestionList()">
+
+          <option value="">請選擇章節</option>
+
+      </select>
+
+      <br><br>
+
+      <div id="manualQuestionList"></div>
+
+      <br>
+
+      <button onclick="saveManualEdit()">儲存</button>
+
+      <button onclick="closeManualEdit()">關閉</button>
+
+   </div>
+
+   <script src="questions_data.js"></script>
+   <script src="app.js"></script>
 
 </body>
 </html>
