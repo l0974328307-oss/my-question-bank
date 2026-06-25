@@ -63,8 +63,7 @@ function drawQuestion() {
     document.getElementById("questionImage").src =
         currentQuestion.file;
 
-    document.getElementById("questionName").innerText =
-        currentQuestion.file;
+    document.getElementById("questionName").innerText = "";
 }
 
 function markDone() {
