@@ -40,7 +40,46 @@ function updateStatus() {
     const remainCount = filteredQuestions.length - doneCount;
 
     document.getElementById("statusText").innerText =
-        `目前章節：${getSelectedChapter()}｜已完成 ${doneCount} 題，剩餘 ${remainCount} 題，共 ${filteredQuestions.length} 題`;
+    `目前章節：${getSelectedChapter()}｜已完成 ${doneCount} 題，剩餘 ${remainCount} 題，共 ${filteredQuestions.length} 題`;
+
+    updateChapterProgress();
+}
+
+
+function updateChapterProgress() {
+    const progressDiv = document.getElementById("chapterProgress");
+
+    const chapters = [...new Set(questions.map(q => q.chapter))];
+
+    let html = "<h3>各章節完成進度</h3>";
+
+    chapters.forEach(chapter => {
+        const chapterQuestions = questions.filter(q => q.chapter === chapter);
+
+        const doneCount = chapterQuestions.filter(q =>
+            doneQuestions.includes(q.file)
+        ).length;
+
+        const totalCount = chapterQuestions.length;
+
+        const percent =
+            totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
+
+        const filledBlocks = Math.round(percent / 10);
+        const emptyBlocks = 10 - filledBlocks;
+
+        const bar =
+            "■".repeat(filledBlocks) + "□".repeat(emptyBlocks);
+
+        html += `
+            <p>
+                ${chapter}<br>
+                ${bar} ${percent}%（${doneCount}/${totalCount}）
+            </p>
+        `;
+    });
+
+    progressDiv.innerHTML = html;
 }
 
 function drawQuestion() {
