@@ -1,0 +1,51 @@
+.container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+.leftPanel{
+
+    width:68%;
+
+}
+
+.rightPanel{
+
+    width:30%;
+
+    text-align:center;
+
+    position:sticky;
+
+    top:20px;
+
+    padding-top:40px;
+
+}
+
+.goodLuckText{
+
+    color:#d60000;
+
+    font-size:48px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.goodLuckImg{
+
+    width:90%;
+
+    max-width:450px;
+
+    border-radius:20px;
+
+}

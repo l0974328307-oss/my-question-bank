@@ -7,80 +7,94 @@
 </head>
 <body>
 
-    <h1>題庫練習APP</h1>
+<div class="container">
 
-    <p id="statusText">已完成 0 題，剩餘 0 題</p>
-    <div id="chapterProgress"></div>
+    <div class="leftPanel">
 
-    <label>選擇章節：</label>
-    <select id="chapterSelect" onchange="updateStatus()">
-        <option value="全部章節">全部章節</option>
-    </select>
+        <h1>題庫練習APP</h1>
 
-    <br><br>
+        <p id="statusText">已完成 0 題，剩餘 0 題</p>
+        <div id="chapterProgress"></div>
 
-    <button onclick="drawQuestion()">隨機抽題</button>
-    <button onclick="markDone()">標記已完成</button>
-    <button onclick="showChapter()">章節來源</button>
-    <button onclick="openManualEdit()">手動修改</button>
-    <button onclick="openCustomChapter()">特定章節</button>
-    <button onclick="resetProgress()">重置紀錄</button>
+        <label>選擇章節：</label>
+        <select id="chapterSelect" onchange="updateStatus()">
+            <option value="全部章節">全部章節</option>
+        </select>
 
-    <br><br>
+        <br><br>
 
-    <img id="questionImage" src="" width="600">
+        <button onclick="drawQuestion()">隨機抽題</button>
+        <button onclick="markDone()">標記已完成</button>
+        <button onclick="showChapter()">章節來源</button>
+        <button onclick="openManualEdit()">手動修改</button>
+        <button onclick="openCustomChapter()">特定章節</button>
+        <button onclick="resetProgress()">重置紀錄</button>
 
-    <br><br>
+        <br><br>
 
-    <div id="questionName" style="display:none;"></div>
+        <img id="questionImage" src="" width="600">
 
-    <hr>
+        <br><br>
 
-    <div id="manualEditArea" style="display:none;">
+        <div id="questionName" style="display:none;"></div>
 
-    	
-      <h2>手動修改</h2>
+        <hr>
 
-      <label>選擇要修改的章節：</label>
+        <div id="manualEditArea" style="display:none;">
 
-      <select id="manualChapterSelect"
-              onchange="showManualQuestionList()">
+            <h2>手動修改</h2>
 
-          <option value="">請選擇章節</option>
+            <label>選擇要修改的章節：</label>
 
-      </select>
+            <select id="manualChapterSelect"
+                    onchange="showManualQuestionList()">
 
-      <br><br>
+                <option value="">請選擇章節</option>
 
-      <div id="manualQuestionList"></div>
+            </select>
 
-      <br>
+            <br><br>
 
-      <button onclick="saveManualEdit()">儲存</button>
+            <div id="manualQuestionList"></div>
 
-      <button onclick="closeManualEdit()">關閉</button>
+            <br>
 
-   </div>
+            <button onclick="saveManualEdit()">儲存</button>
+            <button onclick="closeManualEdit()">關閉</button>
 
-   <hr>
+        </div>
 
-   <div id="customChapterArea" style="display:none;">
+        <hr>
 
-      <h2>特定章節</h2>
+        <div id="customChapterArea" style="display:none;">
 
-      <p>勾選想要抽題的章節。若全不勾或全勾，則視為全部章節。</p>
+            <h2>特定章節</h2>
 
-      <div id="customChapterList"></div>
+            <p>勾選想要抽題的章節。若全不勾或全勾，則視為全部章節。</p>
 
-      <br>
+            <div id="customChapterList"></div>
 
-      <button onclick="saveCustomChapter()">儲存</button>
-      <button onclick="closeCustomChapter()">關閉</button>
+            <br>
 
-   </div>
+            <button onclick="saveCustomChapter()">儲存</button>
+            <button onclick="closeCustomChapter()">關閉</button>
 
-   <script src="questions_data.js"></script>
-   <script src="app.js"></script>
+        </div>
+
+    </div>
+
+    <div class="rightPanel">
+
+        <h1 class="goodLuckText">祝你金榜題名</h1>
+
+        <img src="panda.jpg" class="goodLuckImg">
+
+    </div>
+
+</div>
+
+<script src="questions_data.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
