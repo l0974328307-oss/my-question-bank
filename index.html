@@ -23,6 +23,7 @@
     <button onclick="markDone()">標記已完成</button>
     <button onclick="showChapter()">章節來源</button>
     <button onclick="openManualEdit()">手動修改</button>
+    <button onclick="openCustomChapter()">特定章節</button>
     <button onclick="resetProgress()">重置紀錄</button>
 
     <br><br>
@@ -58,6 +59,23 @@
       <button onclick="saveManualEdit()">儲存</button>
 
       <button onclick="closeManualEdit()">關閉</button>
+
+   </div>
+
+   <hr>
+
+   <div id="customChapterArea" style="display:none;">
+
+      <h2>特定章節</h2>
+
+      <p>勾選想要抽題的章節。若全不勾或全勾，則視為全部章節。</p>
+
+      <div id="customChapterList"></div>
+
+      <br>
+
+      <button onclick="saveCustomChapter()">儲存</button>
+      <button onclick="closeCustomChapter()">關閉</button>
 
    </div>
 

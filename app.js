@@ -1,5 +1,8 @@
 let currentQuestion = null;
 
+let customChapters =
+    JSON.parse(localStorage.getItem("customChapters")) || [];
+
 let doneQuestions =
     JSON.parse(localStorage.getItem("doneQuestions")) || [];
 
@@ -8,6 +11,17 @@ function getSelectedChapter() {
 }
 
 function getFilteredQuestions() {
+    const allChapters = [...new Set(questions.map(q => q.chapter))];
+
+    if (
+        customChapters.length > 0 &&
+        customChapters.length < allChapters.length
+    ) {
+        return questions.filter(q =>
+            customChapters.includes(q.chapter)
+        );
+    }
+
     const selectedChapter = getSelectedChapter();
 
     if (selectedChapter === "全部章節") {
@@ -16,7 +30,6 @@ function getFilteredQuestions() {
 
     return questions.filter(q => q.chapter === selectedChapter);
 }
-
 function initChapterSelect() {
     const chapterSelect = document.getElementById("chapterSelect");
 
@@ -39,8 +52,19 @@ function updateStatus() {
 
     const remainCount = filteredQuestions.length - doneCount;
 
-    document.getElementById("statusText").innerText =
-    `目前章節：${getSelectedChapter()}｜已完成 ${doneCount} 題，剩餘 ${remainCount} 題，共 ${filteredQuestions.length} 題`;
+    let rangeText = getSelectedChapter();
+
+const allChapters = [...new Set(questions.map(q => q.chapter))];
+
+if (
+    customChapters.length > 0 &&
+    customChapters.length < allChapters.length
+) {
+    rangeText = "特定章節：" + customChapters.join("、");
+}
+
+document.getElementById("statusText").innerText =
+`目前範圍：${rangeText}｜已完成 ${doneCount} 題，剩餘 ${remainCount} 題，共 ${filteredQuestions.length} 題`;
 
     updateChapterProgress();
 }
@@ -264,6 +288,62 @@ function saveManualEdit() {
     document.getElementById("manualEditArea").style.display = "none";
 
     alert("儲存成功！");
+}
+
+function openCustomChapter() {
+    document.getElementById("customChapterArea").style.display = "block";
+    initCustomChapterList();
+}
+
+function closeCustomChapter() {
+    document.getElementById("customChapterArea").style.display = "none";
+}
+
+function initCustomChapterList() {
+    const listDiv = document.getElementById("customChapterList");
+
+    const chapters = [...new Set(questions.map(q => q.chapter))];
+
+    let html = "";
+
+    chapters.forEach(chapter => {
+        const checked =
+            customChapters.includes(chapter) ? "checked" : "";
+
+        html += `
+            <label style="display:block; margin:6px 0;">
+                <input type="checkbox"
+                       class="customChapterCheckbox"
+                       value="${chapter}"
+                       ${checked}>
+                ${chapter}
+            </label>
+        `;
+    });
+
+    listDiv.innerHTML = html;
+}
+
+function saveCustomChapter() {
+    const checkedBoxes =
+        document.querySelectorAll(".customChapterCheckbox:checked");
+
+    customChapters = [];
+
+    checkedBoxes.forEach(box => {
+        customChapters.push(box.value);
+    });
+
+    localStorage.setItem(
+        "customChapters",
+        JSON.stringify(customChapters)
+    );
+
+    updateStatus();
+
+    document.getElementById("customChapterArea").style.display = "none";
+
+    alert("特定章節設定已儲存！");
 }
 
 initChapterSelect();
